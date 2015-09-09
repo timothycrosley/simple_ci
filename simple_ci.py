@@ -93,10 +93,13 @@ def worker(namespace, name, branch='master'):
         data = {'status': 'in_progress', 'result': ''}
         cache[latest] = json.dumps(data)
         test_output = tox(_iter=True)
-        for line in test_output:
-            data['result'] += line
-            cache[latest] = json.dumps(data)
-        data['build_success'] = True if test_output.exit_code == 0 else False
+        try:
+            for line in test_output:
+                data['result'] += line
+                cache[latest] = json.dumps(data)
+            data['build_success'] = True
+        except Exception:
+            data['build_success'] = False
         data['status'] = 'complete'
         cache[latest] = json.dumps(data)
         return 'Build successfully completed'
