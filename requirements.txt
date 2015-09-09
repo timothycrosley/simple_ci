@@ -11,3 +11,4 @@ gunicorn==19.3.0
 Pillow==2.9.0
 sh==1.11
 Cython==0.22.1
+simple_ci==0.0.1
