@@ -21,6 +21,7 @@ redis.configure({'host': REDIS_AUTH.hostname, 'port': REDIS_AUTH.port or 6379, '
 
 def draw_pin(text, background_color='green', font_color='white'):
     '''Draws and returns a pin with the specified text and color scheme'''
+    raise ValueError('For Science!')
     image = Image.new('RGB', (120, 20))
     draw = ImageDraw.Draw(image)
     draw.rectangle([(1, 1), (118, 18)], fill=color(background_color))
