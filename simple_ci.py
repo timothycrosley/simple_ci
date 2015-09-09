@@ -3,7 +3,6 @@ import json
 import os
 import sys
 from contextlib import contextmanager
-from subprocess import PIPE, Popen
 from tempfile import TemporaryDirectory
 from urllib.parse import urlparse
 
@@ -18,7 +17,6 @@ __version__ = '0.0.1'
 NOT_FOUND = -1
 REDIS_AUTH = urlparse(os.environ.get('REDISCLOUD_URL'))
 redis.configure({'host': REDIS_AUTH.hostname, 'port': REDIS_AUTH.port or 6379, 'password': REDIS_AUTH.password})
-ci_workers = {}
 
 
 def draw_pin(text, background_color='green', font_color='white'):
@@ -87,7 +85,6 @@ def build_text(namespace, name, branch='master'):
 @hug.cli('ci_worker', version=__version__)
 def worker(namespace, name, branch='master'):
     '''The simple_ci background worker process'''
-    print("hi")
     with repository(namespace, name, branch) as (path, latest, cache):
         if cache.get(latest, None) and json.loads(cache[latest])['status'] != 'starting':
             return 'Build already started'
